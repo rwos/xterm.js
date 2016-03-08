@@ -1596,6 +1596,18 @@
                 case 118:
                   // reset colors
                   break;
+                case 1337:
+                  // iterm2 embed https://iterm2.com/images.html
+                  console.log(1337);
+                  console.log(this.currentParam);
+                  console.log(this.params);
+                  break;
+                case 1338:
+                  // rpterm stuff
+                  console.log(1338);
+                  console.log(this.currentParam);
+                  console.log(this.params);
+                  break;
               }
 
               this.params = [];

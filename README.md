@@ -1,19 +1,21 @@
-# xterm.js
+# rpterm-xterm
 
-Xterm.js is a full xterm clone, written in JavaScript.
+Fork of [xterm.js](https://github.com/sourcelair/xterm.js)
+with more bugs and questionable features.
 
-It is used at [SourceLair](https://www.sourcelair.com/home) to help people develop their applications in their browsers.
-
-Xterm.js supplies a modular, event-based interface that lets developers build addons and themes on top of it.
-
-![xterm.js screenshot](xtermjs.png)
-
-### Contribution and License Agreement
-
-If you contribute code to this project, you are implicitly allowing your code to be distributed under the MIT license. You are also implicitly verifying that all code is your original work.
+Do not use, use xterm.js.
 
 ## License
+
+xterm.js is
 
 Copyright (c) 2014-2016, SourceLair, Private Company ([www.sourcelair.com](https://www.sourcelair.com/home)) (MIT License)
 
 Copyright (c) 2012-2013, Christopher Jeffrey (MIT License)
+
+my additions are
+
+Copyright (c) 2016 by Richard Wossal <richard@r-wos.org>
+
+also under MIT, obviously. See the LICENSE file for details.
+

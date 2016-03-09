@@ -974,7 +974,7 @@
      *   1=bold, 2=underline, 4=blink, 8=inverse, 16=invisible
     */
     Terminal.prototype.refresh = function(start, end) {
-      var x, y, i, line, out, ch, width, data, attr, bg, fg, flags, row, parent, focused = document.activeElement;
+      var x, y, i, line, out, ch, html, width, data, attr, bg, fg, flags, row, parent, focused = document.activeElement;
 
       if (end - start >= this.rows / 2) {
         parent = this.element.parentNode;
@@ -1010,6 +1010,12 @@
         for (; i < width; i++) {
           data = line[i][0];
           ch = line[i][1];
+          html = false;
+          if (line[i].length === 3) {
+            html = line[i][2];
+            out = html;
+            break;
+          }
 
           if (i === x) data = -1;
 
@@ -1601,12 +1607,35 @@
                   console.log(1337);
                   console.log(this.currentParam);
                   console.log(this.params);
+                  //this.lines[this.y + this.ybase][this.x] = [this.curAttr, ch];
+                  //this.x++;
+                  //this.updateRange(this.y);
                   break;
                 case 1338:
                   // rpterm stuff
-                  console.log(1338);
-                  console.log(this.currentParam);
-                  console.log(this.params);
+                  if (this.params.length !== 2 || this.params[1].length < 1) {
+                    console.error("OSC 1337: no data", this.params);
+                    break;
+                  }
+                  var parts = this.params[1].split(';');
+                  if (parts.length !== 2) {
+                    console.error("OSC 1337: no data part", parts, this.params)
+                    break;
+                  }
+                  var mime = parts[0];
+                  /// XXX: only images for now
+                  if (mime.indexOf('image') !== 0) {
+                    console.error("OSC 1337: not image", mime, parts, this.params);
+                    break;
+                  }
+                  var data = parts[1];
+                  var html = '<img src="data:' + mime + ';base64,' + data + '">';
+                  this.lines[this.y + this.ybase][this.x] = [this.curAttr, ' ', html];
+                  this.y++;
+                  if (this.y > this.scrollBottom) {
+                    this.y--;
+                    this.scroll();
+                  }
                   break;
               }
 

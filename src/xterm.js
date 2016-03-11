@@ -1607,6 +1607,7 @@
                   console.log(1337);
                   console.log(this.currentParam);
                   console.log(this.params);
+                  // TODO: just embed as img, with data:;base64,
                   //this.lines[this.y + this.ybase][this.x] = [this.curAttr, ch];
                   //this.x++;
                   //this.updateRange(this.y);
@@ -1629,12 +1630,26 @@
                     break;
                   }
                   var data = parts[1];
-                  var html = '<img src="data:' + mime + ';base64,' + data + '">';
+                  /// XXX remove position:absolute (see below)
+                  var html = '<img style="position:absolute" src="data:' + mime + ';base64,' + data + '">';
                   this.lines[this.y + this.ybase][this.x] = [this.curAttr, ' ', html];
-                  this.y++;
-                  if (this.y > this.scrollBottom) {
-                    this.y--;
-                    this.scroll();
+                  /// XXX HACK: insert as many lines as the image is high
+                  /// FIXME: proper support for non-standard-height rows in scrolling logic
+                  var dev_null_el = document.createElement('div');
+                  dev_null_el.style.visibility = 'hidden';
+                  dev_null_el.style.position = 'absolute';
+                  dev_null_el.style.display = 'block';
+                  document.body.appendChild(dev_null_el);
+                  dev_null_el.innerHTML = html;
+                  var embed_height = dev_null_el.scrollHeight;
+                  document.body.removeChild(dev_null_el);
+                  var lines_to_insert = Math.ceil(embed_height / this.children[this.y].scrollHeight) + 1;
+                  for (var index = 0; index < lines_to_insert; index++) {
+                    this.y++;
+                    if (this.y > this.scrollBottom) {
+                      this.y--;
+                      this.scroll();
+                    }
                   }
                   break;
               }

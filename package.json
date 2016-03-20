@@ -1,6 +1,6 @@
 {
   "name": "rpterm-xterm",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "ignore": ["demo", "test", ".gitignore"],
   "main": "src/xterm.js",
   "repository": "https://github.com/rwos/xterm.js",

@@ -1618,19 +1618,18 @@
                     console.error("OSC 1338: no data", this.params);
                     break;
                   }
-                  /// XXX FIXME: split only into two parts
                   var parts = this.params[1].split(';');
-                  if (parts.length !== 2) {
+                  if (parts.length < 2) {
                     console.error("OSC 1338: no data part", parts, this.params)
                     break;
                   }
-                  var mime = parts[0];
+                  var mime = parts.shift();
                   /// XXX: only images for now
                   if (mime.indexOf('image') !== 0) {
-                    console.error("OSC 1338: not image", mime, parts, this.params);
+                    console.error("OSC 1338: unsupported mime", mime, parts, this.params);
                     break;
                   }
-                  var url = parts[1];
+                  var url = parts.join(';');
                   /// XXX remove position:absolute (see below)
                   var html = '<img style="position:absolute" src="' + url + '">';
                   this.lines[this.y + this.ybase][this.x] = [this.curAttr, ' ', html];
